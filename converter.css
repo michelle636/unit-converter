@@ -1,0 +1,16 @@
+body {
+	background: linear-gradient(90deg, #0d334b 19px, transparent 1%) center, linear-gradient(#0d334b 19px, transparent 1%) center, #113f5d;
+	background-size: 22px 22px;
+}
+#root{
+    background-color: whitesmoke;
+    width:40%;
+    padding:20px;
+    border-radius: 10px;
+    margin-left:30%;
+    margin-top:10%;
+    text-align: center;
+}
+#container img{
+    width:100px;
+}

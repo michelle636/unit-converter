@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert App</title>
+    <link rel="stylesheet" href="./converter.css" />
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<!--React = Power house of interactivity-->
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<!--React DOM = React Element를 가져다가 HTML로 바꿔주는 역할-->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!--JSX를 브라우저가 인식할 수 있게 변형해줌-->
+<script type="text/babel">       
+    
+    function MinutesToHours(){   
+    const [amount, setAmount] = React.useState();
+    const [flipped, setFlipped] = React.useState(false);
+    const onChange = (event) => {
+        setAmount(event.target.value);
+    };
+    const reset = () => setAmount(0);
+    const onFlip = () => {
+        reset();
+        setFlipped((current) => !current)};
+    return (
+    <div>
+        <div>
+        <label htmlFor="minutes">Minutes</label>
+        <input 
+        value={flipped ? amount*60 : amount} 
+        id="minutes" 
+        placeholder="Minutes" 
+        type="number"
+        onChange={onChange}
+        disabled= {flipped === true}
+        />
+        </div>
+        <div>
+        <label htmlFor="hours">Hours</label>
+        <input 
+        value={flipped ? amount : Math.round(amount/60)} 
+        id="hours" 
+        placeholder="Hours" 
+        type="number" 
+        disabled={flipped === false}
+        onChange={onChange}
+        />
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlip}>Flipped</button>
+    </div>
+);
+}
+
+    function KmToMiles(){
+        const [meters,setMeters] = React.useState();
+        const [inverted, setInverted] = React.useState(false);
+        const onChange = (event) => {
+            setMeters(event.target.value);
+        };
+        const reset = () => setMeters(0);
+        const onInvert = () => {
+            reset();
+            setInverted((current) => !current)};
+        return (
+        <div>
+        <div>
+        <label htmlFor="kilometers">Kilometers</label>
+        <input 
+        value={inverted ? Math.round(meters*1.609344):meters}
+        id="kilometers" 
+        placeholder="kilometer" 
+        type="number"
+        onChange={onChange}
+        disabled = {inverted === true}
+        />
+        </div>
+        <div>
+            <label htmlFor="miles">Miles</label>
+            <input 
+            value={inverted ? meters:Math.round(meters*0.621371)}
+            id="miles"
+            placeholder="miles"
+            type="number"
+            onChange={onChange}
+            disabled = {inverted === false}
+            />
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onInvert}>Invert</button>
+        </div>
+        );
+    }
+    function MToP(){
+        const [squareMeter, setSquareMeter] = React.useState();
+        const [converted, setConverted] = React.useState(false);
+        const reset = () => setSquareMeter(0);
+        const onChange = (event) => {
+            setSquareMeter(event.target.value);
+        };
+        const onConvert = () => {
+            reset();
+            setConverted((current) => !current)};
+        return(
+            <div>    
+            <div>
+              <label htmlFor="squareMeter">SquareMeter</label>
+              <input 
+              value={converted ? squareMeter*3.3 : squareMeter}
+              id="squareMeter"
+              placeholder="squareMeter"
+              type="number"
+              onChange={onChange}
+              disabled ={converted === true}
+              />  
+            </div>
+            <div>
+                <label htmlFor="pyung">평</label>
+                <input 
+                value={converted ? squareMeter : squareMeter*0.3025}
+                id="pyung"
+                placeholder="평"
+                type="number"
+                onChange={onChange}
+                disabled={converted === false}
+                />
+            </div>
+            <button onClick={reset}>Reset</button>
+            <button onClick={onConvert}>Convert</button>
+            </div>
+            );
+    }
+    function App(){   
+        const [index, setIndex] = React.useState("xx");
+        const onSelect = (event) => {
+            setIndex(event.target.value);
+        }     
+        return (
+        <div id="container">
+            <img src={"./img/premium-icon-automation-4413230.png"} />
+            <h1>Super Converter</h1>
+            <select value={index} onChange={onSelect}>
+                <option value="xx">Select Your Units</option>
+                <option value="0">Minutes - Hours</option>
+                <option value="1">Kilometers - Miles</option>
+                <option value="2">㎡ - 평</option>         
+            </select>
+            <hr />
+            {index === "xx" ? "Please Select Your Units." : null}
+            {index === "0" ? <MinutesToHours /> : null}
+            {index === "1" ? <KmToMiles /> : null}
+            {index === "2" ? <MToP /> : null}
+        </div>
+    );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+    
+</script>
+</html>
